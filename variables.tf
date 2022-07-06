@@ -45,3 +45,8 @@ variable "dns_zonal_record_ttl" {
   type        = string
   default     = 60
 }
+
+variable "ably_vpc_service_endpoint_name" {
+  type        = string
+  description = "VPC Service endpoint to use for Cloudwatch Alarms. This will be provided by Ably."
+}

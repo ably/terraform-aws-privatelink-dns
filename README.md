@@ -125,6 +125,8 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [aws_cloudwatch_metric_alarm.privatelink_disabled_status](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm) | resource |
+| [aws_route53_health_check.privatelink_disabled_status](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_health_check) | resource |
 | [aws_route53_record.ably-global](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_record.ably-regional](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_record.ably-zonal](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
@@ -135,6 +137,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_ably_vpc_endpoint_dns_entry"></a> [ably\_vpc\_endpoint\_dns\_entry](#input\_ably\_vpc\_endpoint\_dns\_entry) | The top level DNS entry exposed by your VPC Endpoint (Non-AZ version) | `string` | n/a | yes |
 | <a name="input_ably_vpc_endpoint_dns_hosted_zone_id"></a> [ably\_vpc\_endpoint\_dns\_hosted\_zone\_id](#input\_ably\_vpc\_endpoint\_dns\_hosted\_zone\_id) | Hosted Zone ID for your VPC Endpoint | `string` | n/a | yes |
+| <a name="input_ably_vpc_service_endpoint_name"></a> [ably\_vpc\_service\_endpoint\_name](#input\_ably\_vpc\_service\_endpoint\_name) | VPC Service endpoint to use for Cloudwatch Alarms. This will be provided by Ably. | `string` | n/a | yes |
 | <a name="input_azs"></a> [azs](#input\_azs) | A list of AWS Availability Zones that you have created VPC endpoints in. Used to create zonal DNS entries for PrivateLink Connections. e.g. eu-west-1a.example.com and eu-west-1b.example.com | `list(string)` | n/a | yes |
 | <a name="input_dns_global_record"></a> [dns\_global\_record](#input\_dns\_global\_record) | The global DNS CNAME record that you wish to use in a Private DNS Hosted Zone. This should be discussed with Ably. | `string` | n/a | yes |
 | <a name="input_dns_global_record_ttl"></a> [dns\_global\_record\_ttl](#input\_dns\_global\_record\_ttl) | TTL Value in seconds for the global DNS CNAME record that you wish to use in a Private DNS Hosted Zone. | `string` | `60` | no |
