@@ -37,11 +37,11 @@ Documentation on troubleshooting AWS Interface VPC endpoints can be found here -
 
 ```terraform
 module "ably_privatelink" {
-  source                          = "ably/terraform-aws-privatelink"
-  version                         = "0.1.0"
+  for_each                        = var.ably_vpc_service_endpoint_name
+  source                          = "github.com/ably/terraform-aws-privatelink?ref=v0.4.0"
   vpc_id                          = "vpc_id"
-  ably_vpc_service_endpoint_name  = "vpc_service_endpoint"
-  subnet_ids                      = ['subnet_id']
+  ably_vpc_service_endpoint_name  = var.ably_vpc_service_endpoint_name[each.key]
+  subnet_ids                      = ["subnet_id"]
   vpc_endpoint_sg_name            = "ably-privatelink-vpc-endpoint-sg"
   vpc_endpoint_sg_description     = "Ably PrivateLink VPC Endpoint SG"
   https_ingress_allowed_ipv4_cidr = ["10.0.0.0/8"]
@@ -60,8 +60,7 @@ resource "aws_route53_zone" "private" {
 }
 
 module "ably_privatelink_dns" {
-  source                               = "ably/terraform-aws-privatelink-dns"
-  version                              = "0.1.4"
+  source                               = "github.com/ably/terraform-aws-privatelink-dns?ref=v0.4.0"
   for_each                             = var.region_config
   route53_private_zone_id              = aws_route53_zone.private.id
   ably_vpc_endpoint_dns_entry          = module.ably_privatelink[each.key].vpc_endpoint_dns_name
@@ -69,14 +68,14 @@ module "ably_privatelink_dns" {
   dns_global_record                    = "example.com"
   regions                              = [each.key]
   azs                                  = toset(each.value)
+  ably_vpc_service_endpoint_name       = var.ably_vpc_service_endpoint_name[each.key]
   depends_on = [
     module.ably_privatelink
   ]
 }
 ```
 
- Variables referenced above should be of type map(map(string))
-Example
+The variables referenced above are maps keyed by AWS region, for example:
 ```terraform
 variable "ably_vpc_service_endpoint_name" {
   description = "Map containing Ably VPC Endpoint Services"
@@ -109,13 +108,13 @@ For guidance on how to contribute to this project, see [CONTRIBUTING.md](CONTRIB
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0, < 7.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0, < 7.0 |
 
 ## Modules
 
